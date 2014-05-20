@@ -1,0 +1,9 @@
+#sidebar {
+	float: left;
+	width: 30%;
+}
+
+#content {
+	float: right;
+	width: 70%;
+}
