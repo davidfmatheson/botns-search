@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mathesonconsulting.botns.entity.Book;
+import com.mathesonconsulting.botns.domain.entities.Book;
 import com.mathesonconsulting.botns.repository.BookRepository;
 
 @Controller
@@ -26,13 +26,12 @@ public class BookController {
 	@ResponseBody
 	public Page<Book> findAll(
 			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "limit", required = false) Integer limit,
-			@RequestParam(value = "sort", required = false) String sort) {
+			@RequestParam(value = "size", required = false) Integer size) {
 		
 		Pageable pageable = null;
 		
-		if (page != null && limit != null) {
-			pageable = new PageRequest(page - 1, limit);
+		if (page != null && size != null) {
+			pageable = new PageRequest(page, size);
 		} else {
 			pageable = new PageRequest(0, Integer.MAX_VALUE);
 		}

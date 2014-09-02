@@ -44,7 +44,7 @@ public class JpaConfig {
 
 		lef.setDataSource(dataSource);
 		lef.setJpaVendorAdapter(jpaVendorAdapter);
-		lef.setPackagesToScan("com.mathesonconsulting.botns.entity");
+		lef.setPackagesToScan("com.mathesonconsulting.botns.domain.entities");
 
 		return lef;
 	}

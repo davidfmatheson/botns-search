@@ -1,4 +1,4 @@
-package com.mathesonconsulting.botns.entity;
+package com.mathesonconsulting.botns.domain.entities;
 
 import java.util.List;
 
