@@ -8,15 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "author")
+public class AuthorEntity {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name = "description")
-	private String description;
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
 
 	public Long getId() {
 		return id;
@@ -26,11 +29,19 @@ public class Category {
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

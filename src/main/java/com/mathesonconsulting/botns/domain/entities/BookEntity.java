@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "book")
-public class Book {
+public class BookEntity {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,23 +29,23 @@ public class Book {
 	@JoinTable(name = "book_author",
 			joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "id")})
-	private List<Author> authors;
+	private List<AuthorEntity> authors;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "book_narrator",
 			joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "id")})
-	private List<Author> narrators;
+	private List<AuthorEntity> narrators;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "book_editor",
 			joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "id")})
-	private List<Author> editors;
+	private List<AuthorEntity> editors;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	private Category category;
+	private CategoryEntity category;
 	
 	public Long getId() {
 		return id;
@@ -63,35 +63,35 @@ public class Book {
 		this.title = title;
 	}
 
-	public List<Author> getAuthors() {
+	public List<AuthorEntity> getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(List<Author> authors) {
+	public void setAuthors(List<AuthorEntity> authors) {
 		this.authors = authors;
 	}
 
-	public Category getCategory() {
+	public CategoryEntity getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(CategoryEntity category) {
 		this.category = category;
 	}
 
-	public List<Author> getNarrators() {
+	public List<AuthorEntity> getNarrators() {
 		return narrators;
 	}
 
-	public void setNarrators(List<Author> narrators) {
+	public void setNarrators(List<AuthorEntity> narrators) {
 		this.narrators = narrators;
 	}
 
-	public List<Author> getEditors() {
+	public List<AuthorEntity> getEditors() {
 		return editors;
 	}
 
-	public void setEditors(List<Author> editors) {
+	public void setEditors(List<AuthorEntity> editors) {
 		this.editors = editors;
 	}
 }

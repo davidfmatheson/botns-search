@@ -5,24 +5,24 @@ import javax.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.mathesonconsulting.botns.domain.entities.Author;
+import com.mathesonconsulting.botns.domain.entities.AuthorEntity;
 import com.mathesonconsulting.botns.repository.AuthorRepository;
 
-@Controller
+@RestController
 @RequestMapping(value = "/authors")
 public class AuthorController {
 	private AuthorRepository authorRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public Page<Author> findAll(
+	public Page<AuthorEntity> findAll(
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "sort", required = false) String sort) {
@@ -39,7 +39,7 @@ public class AuthorController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Author findOne(@PathVariable Long id) {
+	public AuthorEntity findOne(@PathVariable Long id) {
 		return authorRepository.findOne(id);
 	}
 	
