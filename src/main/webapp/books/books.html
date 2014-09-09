@@ -1,2 +1,28 @@
-<h1>Books Template</h1>
-<div ui-view></div>
+<h1>Books on the Nightstand Book List</h1>
+<div class="books-pager">
+  <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"
+    items-per-page="itemsPerPage" boundary-links="true" previous-text="&lsaquo;"
+    next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+    max-size="5"></pagination>
+  <form role="form">
+    <div class="form-group">
+      <label for="search">Search</label>
+      <input id="search" class="form-control" ng-model="query" type="text" />
+    </div>
+  </form>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="book in books">
+        <td>{{book.title}}</td>
+        <td>{{book.authors.0.firstName}} {{book.authors.0.lastName}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <pre>Page: {{currentPage}}</pre>
+</div>

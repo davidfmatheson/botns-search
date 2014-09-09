@@ -1,5 +1,7 @@
 package com.mathesonconsulting.botns.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -12,35 +14,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mathesonconsulting.botns.domain.dtos.Author;
 import com.mathesonconsulting.botns.domain.entities.AuthorEntity;
+import com.mathesonconsulting.botns.domain.mapping.DtoMapper;
 import com.mathesonconsulting.botns.repository.AuthorRepository;
 
 @RestController
 @RequestMapping(value = "/authors")
 public class AuthorController {
+	@Resource(name = "mapper")
+	private DtoMapper mapper;
+	
 	private AuthorRepository authorRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public Page<AuthorEntity> findAll(
+	public List<Author> findAll(
 			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "limit", required = false) Integer limit,
-			@RequestParam(value = "sort", required = false) String sort) {
+			@RequestParam(value = "size", required = false) Integer size) {
+		List<Author> authors = null;
+		
 		Pageable pageable = null;
 		
-		if (page != null && limit != null) {
-			pageable = new PageRequest(page - 1, limit);
+		if (page != null && size != null) {
+			pageable = new PageRequest(page, size);
 		} else {
 			pageable = new PageRequest(0, Integer.MAX_VALUE);
 		}
 		
-		return authorRepository.findAll(pageable);
+		Page<AuthorEntity> authorEntities = authorRepository.findAll(pageable);
+		
+		if (authorEntities != null) {
+			authors = mapper.mapAsList(authorEntities.getContent(), Author.class);
+		}
+		
+		return authors;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public AuthorEntity findOne(@PathVariable Long id) {
-		return authorRepository.findOne(id);
+	public Author findOne(@PathVariable Long id) {
+		AuthorEntity authorEntity = authorRepository.findOne(id);
+		
+		return mapper.map(authorEntity, Author.class);
 	}
 	
 	@Resource(name = "authorRepository")

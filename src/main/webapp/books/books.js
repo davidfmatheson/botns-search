@@ -2,7 +2,9 @@
 
 angular.module('botns-search.books', [
   'ui.router',
-  'botns-search.books-service'
+  'ui.bootstrap',
+  'botns-search.books-service',
+  'botns-search.books-filter'
 ])
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -13,7 +15,20 @@ angular.module('botns-search.books', [
     });
 }])
 .controller('BooksCtrl', ['$scope', 'booksService', function($scope, booksService) {
-  booksService.findAll(function(data) {
+  $scope.currentPage = 1;
+  $scope.itemsPerPage = 10;
+  
+  booksService.count(function(data){
+    $scope.totalItems = data;
+  });
+  
+  booksService.findAll($scope.currentPage - 1, $scope.itemsPerPage, function(data) {
     $scope.books = data;
   });
+
+  $scope.pageChanged = function() {
+    booksService.findAll($scope.currentPage - 1, $scope.itemsPerPage, function(data) {
+      $scope.books = data;
+    });
+  };
 }]);

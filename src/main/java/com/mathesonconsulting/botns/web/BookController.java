@@ -45,10 +45,23 @@ public class BookController {
 		Page<BookEntity> bookEntities = bookRepository.findAll(pageable);
 		
 		if (bookEntities != null) {
-			books = mapper.mapAsList(bookEntities, Book.class);
+			books = mapper.mapAsList(bookEntities.getContent(), Book.class);
 		}
 		
 		return books;
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Book> findByTitle(@RequestParam(value = "title", required = true) String title) {
+		List<BookEntity> bookEntities = bookRepository.findByTitle(title);
+		return mapper.mapAsList(bookEntities, Book.class);
+	}
+	
+	@RequestMapping(value = "/count", method = RequestMethod.GET)
+	@ResponseBody
+	public Long count() {
+		return bookRepository.count();
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -56,13 +69,6 @@ public class BookController {
 	public Book findOne(@PathVariable Long id) {
 		BookEntity bookEntity = bookRepository.findOne(id);
 		return mapper.map(bookEntity, Book.class);
-	}
-	
-	@RequestMapping(value = "/search/{title}", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Book> findByTitle(@PathVariable String title) {
-		List<BookEntity> bookEntities = bookRepository.findByTitle(title);
-		return mapper.mapAsList(bookEntities, Book.class);
 	}
 	
 	@Resource(name = "bookRepository")

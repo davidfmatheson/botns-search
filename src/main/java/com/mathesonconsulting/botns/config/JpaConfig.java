@@ -1,5 +1,7 @@
 package com.mathesonconsulting.botns.config;
 
+import java.util.Properties;
+
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
@@ -33,6 +35,11 @@ public class JpaConfig {
 				true);
 		
 		dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
+		
+		Properties connectionProperties = new Properties();
+		connectionProperties.setProperty("relaxAutoCommit", "true");
+		
+		dataSource.setConnectionProperties(connectionProperties);
 		
 		return dataSource;
 	}
