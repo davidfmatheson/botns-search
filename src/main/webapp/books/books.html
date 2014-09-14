@@ -7,7 +7,7 @@
   <form role="form">
     <div class="form-group">
       <label for="search">Search</label>
-      <input id="search" class="form-control" ng-model="query" type="text" />
+      <input id="search" class="form-control" ng-model="query" ng-change="titleFilter()" type="text" />
     </div>
   </form>
   <table class="table table-bordered">

@@ -16,7 +16,7 @@ angular.module('botns-search.books-service', [])
           method: 'GET',
           url: 'api/books/search',
           params: {title: title},
-          cache: true
+          cache: false
         }).success(callback);
       },      
       count: function(callback) {

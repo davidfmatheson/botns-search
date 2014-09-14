@@ -31,4 +31,16 @@ angular.module('botns-search.books', [
       $scope.books = data;
     });
   };
+  
+  $scope.titleFilter = function() {
+    if ($scope.query) {
+      booksService.findByTitle($scope.query, function(data) {
+        $scope.books = data;
+      });
+    } else {
+      booksService.findAll($scope.currentPage - 1, $scope.itemsPerPage, function(data) {
+        $scope.books = data;
+      });
+    }
+  };
 }]);
